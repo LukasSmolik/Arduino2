@@ -2,7 +2,7 @@
 
 #include <VirtualWire.h>
 
-uint8_t message[VW_MAX_MESSAGE_LEN]; // a buffer to store the incoming messages
+char message[VW_MAX_MESSAGE_LEN]; // a buffer to store the incoming messages
 uint8_t messageLength = VW_MAX_MESSAGE_LEN; // the size of the message
 
 void setup()
@@ -19,12 +19,13 @@ void loop()
 {
   if (vw_get_message(message, &messageLength)) // Non-blocking
   {
-    Serial.print("Received: ");
+    //char *ptr = strtok(message, ":");
+    //Serial.println();
     for (int i = 0; i < messageLength; i++)
     {
       Serial.print(message[i]);
     }
     Serial.println();
   }
+  
 }
-

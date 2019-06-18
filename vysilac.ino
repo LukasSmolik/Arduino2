@@ -32,19 +32,28 @@ void loop()
 {
   sensors_event_t event; 
   accel.getEvent(&event);
-  double* message = new double(event.acceleration.x*3*M_PI);
-  send(message);
-  delay(1000);
+  send((int)(event.acceleration.x*3*M_PI));
+  posli((int)(event.acceleration.y*3*M_PI));
+  delay(200);
 }
 
-void send (double *message)
+void send (int polohaX)
 {
-  
-  //const char *zprava = "";
-  //char znaky [128];
-//  snprintf(znaky, sizeof(znaky), "%ld", message);
-  Serial.println(*message);
-  vw_send((uint8_t *)message, sizeof(message));
+  //Serial.println(cislo);
+  char znakX[22];
+  sprintf(znakX, "%i", polohaX);
+  vw_send(znakX, strlen(znakX));
   vw_wait_tx(); // Wait until the whole message is gone
-  Serial.println(*message);
+  Serial.println(znakX);
 }
+void posli (int polohaY)
+{
+  char znakY[22];
+  sprintf(znakY, "%i", polohaY);
+  vw_send(znakY, strlen(znakY));
+  vw_wait_tx(); // Wait until the whole message is gone
+  Serial.println(znakY);
+}
+
+
+
